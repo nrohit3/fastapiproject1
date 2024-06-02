@@ -7,9 +7,22 @@ from settings import (POSTGRES_USERNAME,POSTGRES_PASSWORD,POSTGRES_SERVER,POSTGR
 
 DATABASE_URL=(f"postgresql://{POSTGRES_USERNAME}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}")
 pg_database=Database(DATABASE_URL,ssl=True,min_size=2,max_size=10)
+metadata=MetaData(schema=POSTGRES_SCHEMA)
+tz_utc=timezone.utc
 
-print("Works fine")
+customer_table=Table("customer",
+                     metadata,
+                     Column("id",Integer,primary_key=True),
+                     Column("name",String,primary_key=True),
+                     Column("city",String,primary_key=True))
 
 
+async def get_customer_details(id):
+    customer_table.select().with_only_columns([
+        customer_table.c.id.label("id"),
+        customer_table.c.name.label("name"),
+        customer_table.c.city.label("city")
+
+    ]).where(customer_table.c.id==id)
 
 
