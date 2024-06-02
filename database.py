@@ -8,6 +8,8 @@ from settings import (POSTGRES_USERNAME,POSTGRES_PASSWORD,POSTGRES_SERVER,POSTGR
 DATABASE_URL=(f"postgresql://{POSTGRES_USERNAME}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}")
 pg_database=Database(DATABASE_URL,ssl=True,min_size=2,max_size=10)
 
+print("Works fine")
+
 
 
 
